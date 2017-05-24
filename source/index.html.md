@@ -2,11 +2,11 @@
 title: Yuansfer POS API Reference
 
 language_tabs:
-  - iOS
-  - Android
+  - Response Example
 
 toc_footers:
-
+  - @Yuansfer
+  - All Right Reserved
 
 includes:
   - errors
@@ -21,36 +21,12 @@ Welcome to the Yuansfer POS API! You can use our API to access Yuansfer API endp
 
 # Notice
 
-> To authorize, use this code:
-
-> Make sure to replace `meowmeowmeow` with your API key.
-
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
 
 # API List
 
 ## Check a store whether exists
 
-```iOS
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```Android
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
+```Response Example
 ```
 
 > The above command returns JSON structured like this:
@@ -62,13 +38,11 @@ api.kittens.get(2)
 }
 ```
 
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+At first, you should check the store whether exists by this API
 
 ### HTTP Request
 
-`GET http://mapi.yuansfer.com/appStore/check`
+`POST http://mapi.yuansfer.com/appStore/check`
 
 ### Post Parameters
 
@@ -79,18 +53,7 @@ storeNo | true | The No of the store.
 
 ## Login
 
-```iOS
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```Android
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
+```Response Example
 ```
 
 > The above command returns JSON structured like this:
@@ -111,194 +74,192 @@ api.kittens.get()
 }
 ```
 
-This endpoint retrieves all kittens.
+After the check store procedure, You can login by the store account, and get the token that need by all APIs.
 
 ### HTTP Request
 
-`GET http://mapi.yuansfer.com/appLogin`
+`POST http://mapi.yuansfer.com/appLogin`
 
 ### Post Parameters
 
 Parameter | Necessary | Description
 --------- | ------- | -----------
 username | true | The user name of the store.
-password | true | The password of the store.
+password | true | The password of the store, you should MD5 the "@yuanex + raw_password" before POST.
 
 ### Response
 
 Parameter | Description
 --------- | -----------
-ret_code  | The code of the result, "000100" indicate success, error code refer below.
+ret_code  | The code of the result, "000100" indicate success, error code refer to the error section.
 ret_msg  | The message of the result.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
+storeNo  | The No of the store.
+storeName  | The name the store.
+token  | The API pass token that need by all APIs.
+storeAdminId  | The administrator ID of the store.
+merchantName  | The merchant name.
+accountNo  | The account No.
+merchantId  | The merchant ID.
+storeUserName  | The user name of the store.
+storeId  | The ID of the store.
 
 ## Change Password Step 1
 
-```iOS
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
+```Response Example
 ```
 
-```Android
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+When you need to change password, you should call two API, this is the first API that you should call and get the password token(different from the login token).
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`POST http://mapi.yuansfer.com/appStoreAdmin/changePwd_step1`
 
-### URL Parameters
+### POST Parameters
+
+Parameter | Necessary | Description
+--------- | ------- | -----------
+storeId | true | The ID of the store.
+merchantId | true | The merchant ID.
+deviceId | true | The device ID.
+storeAdminId   | true | The administrator ID of the store.
+token | true | The login token.
+accountNo | true | The account No.
+password | true | The old password of the store, you should MD5 the "@yuanex + raw_password" before POST.
+
+### Response
 
 Parameter | Description
 --------- | -----------
-ID | The ID of the kitten to retrieve
+pwdToken  | The token to modify the password, need in Step 2.
+
 
 ## Change Password Step 2
 
-```iOS
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
+```Response Example
 ```
 
-```Android
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+When you need to change password, you should call two API, this is the second API that you should call.
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`POST http://mapi.yuansfer.com/appStoreAdmin/changePwd_step2`
 
-### URL Parameters
+### POST Parameters
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
+Parameter | Necessary | Description
+--------- | ------- | -----------
+storeId | true | The ID of the store.
+merchantId | true | The merchant ID.
+deviceId | true | The device ID.
+storeAdminId   | true | The administrator ID of the store.
+token | true | The login token.
+accountNo | true | The account No.
+password | true | The new password of the store, you should MD5 the "@yuanex + raw_password" before POST.
+pwdToken | true | Get it in Step 1.
 
 ## Create New Order
 
-```iOS
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
+```Response Example
 ```
-
-```Android
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`POST http://mapi.yuansfer.com/appTransaction/add`
 
-### URL Parameters
+### POST Parameters
+
+Parameter | Necessary | Description
+--------- | ------- | -----------
+storeId | true | The ID of the store.
+merchantId | true | The merchant ID.
+deviceId | true | The device ID.
+storeAdminId   | true | The administrator ID of the store.
+token | true | The login token.
+amount | true | The amount of money(USD).
+tip | true | The tips of this transaction.
+transactionCurrency | true | Currency.
+
+### Response
 
 Parameter | Description
 --------- | -----------
-ID | The ID of the kitten to retrieve
+transactionNo  | The transaction No.
+merchantId  | The merchant ID.
+storeId  | The ID of the store.
+storeAdminId  | The administrator ID of the store.
 
 ## Pay
 
-```iOS
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
+```Response Example
 ```
 
-```Android
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+After scan QR-Code of the customer's Phone, call this API to get the pay(money).
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`POST http://mapi.yuansfer.com/appTransaction/pay`
 
-### URL Parameters
+### POST Parameters
+
+Parameter | Necessary | Description
+--------- | ------- | -----------
+storeId | true | The ID of the store.
+merchantId | true | The merchant ID.
+deviceId | true | The device ID.
+storeAdminId   | true | The administrator ID of the store.
+token | true | The login token.
+transactionNo | true | The transaction No.
+paymentBarcode | true | 
+
+### Response
 
 Parameter | Description
 --------- | -----------
-ID | The ID of the kitten to retrieve
+supplierPartnerId  | 
+supplierTransId  | 
+supplierUserLoginId  | 
+exchangeRate  | 
+supplierPayTime  | 
 
-## Refund
 
-```iOS
-require 'kittn'
+## Refund a transaction
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
+```Response Example
 ```
 
-```Android
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+When you need to refund a transaction, call this API.
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`POST http://mapi.yuansfer.com/appTransaction/refund`
 
-### URL Parameters
+### POST Parameters
+
+Parameter | Necessary | Description
+--------- | ------- | -----------
+storeId | true | The ID of the store.
+merchantId | true | The merchant ID.
+deviceId | true | The device ID.
+storeAdminId   | true | The administrator ID of the store.
+token | true | The login token.
+refundAmount | true | The refund amount(USD).
+refundAdmAccId | true | 
+refundPassword | true | The refund password, you should MD5 the raw password before POST.
+
+### Response
 
 Parameter | Description
 --------- | -----------
-ID | The ID of the kitten to retrieve
+originalTransactionNo  | 
+supplierPartnerId  | 
+supplierTransId  | 
+supplierUserLoginId  | 
+exchangeRate  | 
+supplierPayTime  | 
 
 ## Transaction History
 
-```iOS
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```Android
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
+```Response Example
 ```
 > The above command returns JSON structured like this:
 
@@ -352,76 +313,208 @@ api.kittens.get(2)
 }
 ```
 
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+Get the store's transaction history
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`POST http://mapi.yuansfer.com/appTransaction/list`
 
-### URL Parameters
+### POST Parameters
+
+Parameter | Necessary | Description
+--------- | ------- | -----------
+storeId | true | The ID of the store.
+merchantId | true | The merchant ID.
+deviceId | true | The Device ID.
+storeAdminId   | true | The administrator ID.
+token | true | The login token.
+
+### Response
 
 Parameter | Description
 --------- | -----------
-ID | The ID of the kitten to retrieve
+transactionNo  | The token to modify the password, need in Step 2.
+amount  | The token to modify the password, need in Step 2.
+refundAmount  | The token to modify the password, need in Step 2.
+netReceivable  | The token to modify the password, need in Step 2.
+exchangeRate  | The token to modify the password, need in Step 2.
+alipayUserLoginId  | The token to modify the password, need in Step 2.
+refundInfo  | The token to modify the password, need in Step 2.
+hasRefund  | The token to modify the password, need in Step 2.
+supplierTransactionNo  | The token to modify the password, need in Step 2.
+transactionReferNo  | The token to modify the password, need in Step 2.
+currency  | The token to modify the password, need in Step 2.
+originalTransactionNo  | The token to modify the password, need in Step 2.
+refundTimeV2  | The token to modify the password, need in Step 2.
+
 
 ## Transaction Detail
 
-```iOS
-require 'kittn'
+```Response Example
+```
+> The above command returns JSON structured like this:
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
+```json
+{
+    "ret_code": "000100",
+    "transaction": {
+        "id": 814,
+        "transactionNo": "297245667968233821",
+        "amount": 0.01,
+        "refundAmount": 0,
+        "netReceivable": 0.01,
+        "exchangeRate": "6.90310000",
+        "alipayUserLoginId": "131****7666",
+        "refundInfo": "",
+        "supplierPayTime": "20170523062656",
+        "hasRefund": 0,
+        "supplierTransactionNo": "2017052321001004980294191655",
+        "transactionReferNo": "1000",
+        "currency": "USD",
+        "originalTransactionNo": null,
+        "refundTime": null,
+        "refundTimeV2": null
+    },
+    "ret_msg": "查询成功"
+}
 ```
 
-```Android
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+Get the transaction detail
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`POST http://mapi.yuansfer.com/appTransaction/detail`
 
-### URL Parameters
+### POST Parameters
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
+Parameter | Necessary | Description
+--------- | ------- | -----------
+storeId | true | The ID of the store.
+merchantId | true | The merchant ID.
+deviceId | true | The device ID.
+storeAdminId   | true | The administrator ID.
+token | true | The login token.
+transactionNo | true | The transaction No.
 
 ## Transaction Statistics
 
-```iOS
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
+```Response Example
 ```
-
-```Android
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`POST http://mapi.yuansfer.com/appTransaction/stats`
 
-### URL Parameters
+### POST Parameters
+
+Parameter | Necessary | Description
+--------- | ------- | -----------
+storeId | true | The ID of the store.
+merchantId | true | The merchant ID.
+deviceId | true | The device ID.
+storeAdminId   | true | The administrator ID.
+token | true | The login token.
+startDate | true | Statistics start date in "yyyy-MM-dd" format.
+endDate | true | Statistics end date in "yyyy-MM-dd" format.
+diff_hour | true | The value that diff from the Beijing Timezone(GMT +8) in hour, e.g: diff_hour=(customer timezone)-8.
+
+### Response
 
 Parameter | Description
 --------- | -----------
-ID | The ID of the kitten to retrieve
+sales  | Total sales amount.
+salesQty  | Total sales quantity.
+refund  | Total refund amount.
+refundQty  | Total refund quantity.
+netSales  | Net sales amount.
+netSalesQty  | Net sales quantity.
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "ret_code": "000100",
+    "stats": {
+        "sales": 10.01,
+        "salesQty": 2,
+        "refund": 11.0,
+        "refundQty": 2,
+        "netSales": -0.99,
+        "netSalesQty": 4,
+        "startDate": 1495468800000,
+        "endDate": 1495468800000,
+        "merchantId": 42,
+        "storeId": 13,
+        "transactionType": 2,
+        "diff_hour": 0
+    },
+    "ret_msg": "查询成功"
+}
+```
+
+## Refund List
+
+```Response Example
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "ret_code": "000100",
+    "ret_msg": "查询成功",
+    "list": [
+        {
+            "id": 817,
+            "transactionNo": "297245668050617422",
+            "amount": -0.01,
+            "refundAmount": null,
+            "netReceivable": null,
+            "exchangeRate": null,
+            "alipayUserLoginId": null,
+            "refundInfo": "SUCCESS",
+            "supplierPayTime": "2017-05-24 05:19:58",
+            "hasRefund": 0,
+            "supplierTransactionNo": null,
+            "transactionReferNo": null,
+            "currency": null,
+            "originalTransactionNo": null,
+            "refundTime": "2017-05-24 05:19:58",
+            "refundTimeV2": "20170524051958"
+        }
+    ]
+}
+```
+
+Get the refund list
+
+### HTTP Request
+
+`POST http://mapi.yuansfer.com/appTransaction/refund`
+
+### POST Parameters
+
+Parameter | Necessary | Description
+--------- | ------- | -----------
+storeId | true | The ID of the store.
+merchantId | true | The merchant ID.
+storeAdminId   | true | The administrator ID of the store.
+token | true | The login token.
+
+### Response
+
+Parameter | Description
+--------- | -----------
+transactionNo  | Transaction No.
+amount  | The transaction amount.
+refundAmount  | The refund amount.
+netReceivable  | The token to modify the password, need in Step 2.
+exchangeRate  | Exchange Rate.
+alipayUserLoginId  | The token to modify the password, need in Step 2.
+refundInfo  | The refund status in text.
+supplierPayTime  | The token to modify the password, need in Step 2.
+hasRefund  | The token to modify the password, need in Step 2.
+supplierTransactionNo  | The token to modify the password, need in Step 2.
+currency  | Currency.
+originalTransactionNo  | Original Transaction No.
+refundTimeV2  | The refund time in "YYMMDDhhmmss"(20170524051958) format.

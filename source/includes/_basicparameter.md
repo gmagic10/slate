@@ -1,20 +1,24 @@
 # Basic Parameters
 
-<aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files...just save them to the `includes` folder and add them to the top of your `index.md`'s frontmatter. Files are included in the order listed.</aside>
+<aside class="notice">This is the basic and common parameters for all api that use for data collection and monitoring. Please provide as much as possible</aside>
 
-The Kittn API uses the following error codes:
+The Yuansfer API uses the following basic parameters:
+Request Method: GET
 
-
-Error Code | Meaning
+Parameter Name | Meaning
 ---------- | -------
-400 | Bad Request -- Your request sucks
-401 | Unauthorized -- Your API key is wrong
-403 | Forbidden -- The kitten requested is hidden for administrators only
-404 | Not Found -- The specified kitten could not be found
-405 | Method Not Allowed -- You tried to access a kitten with an invalid method
-406 | Not Acceptable -- You requested a format that isn't json
-410 | Gone -- The kitten requested has been removed from our servers
-418 | I'm a teapot
-429 | Too Many Requests -- You're requesting too many kittens! Slow down!
-500 | Internal Server Error -- We had a problem with our server. Try again later.
-503 | Service Unavailable -- We're temporarily offline for maintenance. Please try again later.
+deviceId | The POS device ID
+app_version_name | The version name of POS device
+app_version | The version of POS device
+client | Not Found -- The specified kitten could not be found
+isRoot | Is it root or jailbreak?
+deviceName | Device Name
+getLanguage | Device language
+packageName | The program's package name
+latitude | latitude
+longitude | longitude
+mid | MID of the POS device
+os_version | Operation System version
+height | The POS device height in pixel
+width | The POS device width in pixel
+net | The network environment of the POS device(wifi or 4G)
