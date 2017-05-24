@@ -5,8 +5,8 @@ language_tabs:
   - Response Example
 
 toc_footers:
-  - @Yuansfer
-  - All Right Reserved
+  - <a href='#'>@Yuansfer</a>
+  - <a href='#'>All Right Reserved</a>
 
 includes:
   - errors
@@ -25,9 +25,6 @@ Welcome to the Yuansfer POS API! You can use our API to access Yuansfer API endp
 # API List
 
 ## Check a store whether exists
-
-```Response Example
-```
 
 > The above command returns JSON structured like this:
 
@@ -52,9 +49,6 @@ storeNo | true | The No of the store.
 
 
 ## Login
-
-```Response Example
-```
 
 > The above command returns JSON structured like this:
 
@@ -105,9 +99,6 @@ storeId  | The ID of the store.
 
 ## Change Password Step 1
 
-```Response Example
-```
-
 When you need to change password, you should call two API, this is the first API that you should call and get the password token(different from the login token).
 
 ### HTTP Request
@@ -135,9 +126,6 @@ pwdToken  | The token to modify the password, need in Step 2.
 
 ## Change Password Step 2
 
-```Response Example
-```
-
 When you need to change password, you should call two API, this is the second API that you should call.
 
 ### HTTP Request
@@ -158,9 +146,6 @@ password | true | The new password of the store, you should MD5 the "@yuanex + r
 pwdToken | true | Get it in Step 1.
 
 ## Create New Order
-
-```Response Example
-```
 
 ### HTTP Request
 
@@ -190,9 +175,6 @@ storeAdminId  | The administrator ID of the store.
 
 ## Pay
 
-```Response Example
-```
-
 After scan QR-Code of the customer's Phone, call this API to get the pay(money).
 
 ### HTTP Request
@@ -209,23 +191,20 @@ deviceId | true | The device ID.
 storeAdminId   | true | The administrator ID of the store.
 token | true | The login token.
 transactionNo | true | The transaction No.
-paymentBarcode | true | 
+paymentBarcode | true |
 
 ### Response
 
 Parameter | Description
 --------- | -----------
-supplierPartnerId  | 
-supplierTransId  | 
-supplierUserLoginId  | 
-exchangeRate  | 
-supplierPayTime  | 
+supplierPartnerId  |
+supplierTransId  |
+supplierUserLoginId  |
+exchangeRate  |
+supplierPayTime  |
 
 
 ## Refund a transaction
-
-```Response Example
-```
 
 When you need to refund a transaction, call this API.
 
@@ -243,24 +222,22 @@ deviceId | true | The device ID.
 storeAdminId   | true | The administrator ID of the store.
 token | true | The login token.
 refundAmount | true | The refund amount(USD).
-refundAdmAccId | true | 
+refundAdmAccId | true |
 refundPassword | true | The refund password, you should MD5 the raw password before POST.
 
 ### Response
 
 Parameter | Description
 --------- | -----------
-originalTransactionNo  | 
-supplierPartnerId  | 
-supplierTransId  | 
-supplierUserLoginId  | 
-exchangeRate  | 
-supplierPayTime  | 
+originalTransactionNo  |
+supplierPartnerId  |
+supplierTransId  |
+supplierUserLoginId  |
+exchangeRate  |
+supplierPayTime  |
 
 ## Transaction History
 
-```Response Example
-```
 > The above command returns JSON structured like this:
 
 ```json
@@ -350,8 +327,6 @@ refundTimeV2  | The token to modify the password, need in Step 2.
 
 ## Transaction Detail
 
-```Response Example
-```
 > The above command returns JSON structured like this:
 
 ```json
@@ -398,7 +373,27 @@ transactionNo | true | The transaction No.
 
 ## Transaction Statistics
 
-```Response Example
+> The above command returns JSON structured like this:
+
+```json
+{
+    "ret_code": "000100",
+    "stats": {
+        "sales": 10.01,
+        "salesQty": 2,
+        "refund": 11.0,
+        "refundQty": 2,
+        "netSales": -0.99,
+        "netSalesQty": 4,
+        "startDate": 1495468800000,
+        "endDate": 1495468800000,
+        "merchantId": 42,
+        "storeId": 13,
+        "transactionType": 2,
+        "diff_hour": 0
+    },
+    "ret_msg": "查询成功"
+}
 ```
 
 ### HTTP Request
@@ -429,33 +424,8 @@ refundQty  | Total refund quantity.
 netSales  | Net sales amount.
 netSalesQty  | Net sales quantity.
 
-> The above command returns JSON structured like this:
-
-```json
-{
-    "ret_code": "000100",
-    "stats": {
-        "sales": 10.01,
-        "salesQty": 2,
-        "refund": 11.0,
-        "refundQty": 2,
-        "netSales": -0.99,
-        "netSalesQty": 4,
-        "startDate": 1495468800000,
-        "endDate": 1495468800000,
-        "merchantId": 42,
-        "storeId": 13,
-        "transactionType": 2,
-        "diff_hour": 0
-    },
-    "ret_msg": "查询成功"
-}
-```
 
 ## Refund List
-
-```Response Example
-```
 
 > The above command returns JSON structured like this:
 
