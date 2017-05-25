@@ -39,7 +39,7 @@ At first, you should check the store whether exists by this API
 
 ### HTTP Request
 
-`POST http://mapi.yuansfer.com/appStore/check`
+`POST https://mapi.yuansfer.com/appStore/check`
 
 ### Post Parameters
 
@@ -72,7 +72,7 @@ After the check store procedure, You can login by the store account, and get the
 
 ### HTTP Request
 
-`POST http://mapi.yuansfer.com/appLogin`
+`POST https://mapi.yuansfer.com/appLogin`
 
 ### Post Parameters
 
@@ -103,7 +103,7 @@ When you need to change password, you should call two API, this is the first API
 
 ### HTTP Request
 
-`POST http://mapi.yuansfer.com/appStoreAdmin/changePwd_step1`
+`POST https://mapi.yuansfer.com/appStoreAdmin/changePwd_step1`
 
 ### POST Parameters
 
@@ -129,7 +129,7 @@ When you need to change password, you should call two API, this is the second AP
 
 ### HTTP Request
 
-`POST http://mapi.yuansfer.com/appStoreAdmin/changePwd_step2`
+`POST https://mapi.yuansfer.com/appStoreAdmin/changePwd_step2`
 
 ### POST Parameters
 
@@ -147,7 +147,7 @@ pwdToken | true | Get it in Step 1.
 
 ### HTTP Request
 
-`POST http://mapi.yuansfer.com/appTransaction/add`
+`POST https://mapi.yuansfer.com/appTransaction/add`
 
 ### POST Parameters
 
@@ -176,7 +176,7 @@ After scan QR-Code of the customer's Phone, call this API to get the pay(money).
 
 ### HTTP Request
 
-`POST http://mapi.yuansfer.com/appTransaction/pay`
+`POST https://mapi.yuansfer.com/appTransaction/pay`
 
 ### POST Parameters
 
@@ -206,7 +206,7 @@ When you need to refund a transaction, call this API.
 
 ### HTTP Request
 
-`POST http://mapi.yuansfer.com/appTransaction/refund`
+`POST https://mapi.yuansfer.com/appTransaction/refund`
 
 ### POST Parameters
 
@@ -290,7 +290,7 @@ Get the store's transaction history
 
 ### HTTP Request
 
-`POST http://mapi.yuansfer.com/appTransaction/list`
+`POST https://mapi.yuansfer.com/appTransaction/list`
 
 ### POST Parameters
 
@@ -357,7 +357,7 @@ Get the transaction detail
 
 ### HTTP Request
 
-`POST http://mapi.yuansfer.com/appTransaction/detail`
+`POST https://mapi.yuansfer.com/appTransaction/detail`
 
 ### POST Parameters
 
@@ -396,7 +396,7 @@ transactionNo | true | The transaction No.
 
 ### HTTP Request
 
-`POST http://mapi.yuansfer.com/appTransaction/stats`
+`POST https://mapi.yuansfer.com/appTransaction/stats`
 
 ### POST Parameters
 
@@ -456,7 +456,7 @@ Get the refund list
 
 ### HTTP Request
 
-`POST http://mapi.yuansfer.com/appTransaction/refundList`
+`POST https://mapi.yuansfer.com/appTransaction/refundList`
 
 ### POST Parameters
 
@@ -467,71 +467,6 @@ merchantId | true | The merchant ID.
 storeAdminId   | true | The administrator ID of the store.
 token | true | The login token.
 originalTransactionNo | true | .
-
-### Response
-
-Parameter | Description
---------- | -----------
-transactionNo  | Transaction No.
-amount  | The transaction amount.
-refundAmount  | The refund amount.
-netReceivable  | The token to modify the password, need in Step 2.
-exchangeRate  | Exchange Rate.
-alipayUserLoginId  | The token to modify the password, need in Step 2.
-refundInfo  | The refund status in text.
-supplierPayTime  | The token to modify the password, need in Step 2.
-hasRefund  | The token to modify the password, need in Step 2.
-supplierTransactionNo  | The token to modify the password, need in Step 2.
-currency  | Currency.
-originalTransactionNo  | Original Transaction No.
-refundTimeV2  | The refund time in "YYMMDDhhmmss"(20170524051958) format.
-
-
-## Refund List
-
-> The above command returns JSON structured like this:
-
-```json
-{
-    "ret_code": "000100",
-    "ret_msg": "查询成功",
-    "list": [
-        {
-            "id": 817,
-            "transactionNo": "297245668050617422",
-            "amount": -0.01,
-            "refundAmount": null,
-            "netReceivable": null,
-            "exchangeRate": null,
-            "alipayUserLoginId": null,
-            "refundInfo": "SUCCESS",
-            "supplierPayTime": "20170524051958",
-            "hasRefund": 0,
-            "supplierTransactionNo": null,
-            "transactionReferNo": null,
-            "currency": null,
-            "originalTransactionNo": null,
-            "refundTime": "2017-05-24 05:19:58",
-            "refundTimeV2": "20170524051958"
-        }
-    ]
-}
-```
-
-Get the refund list
-
-### HTTP Request
-
-`POST http://mapi.yuansfer.com/appTransaction/refundList`
-
-### POST Parameters
-
-Parameter | Necessary | Description
---------- | ------- | -----------
-storeId | true | The ID of the store.
-merchantId | true | The merchant ID.
-storeAdminId   | true | The administrator ID of the store.
-token | true | The login token.
 
 ### Response
 
