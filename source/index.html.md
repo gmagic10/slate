@@ -111,7 +111,6 @@ Parameter | Necessary | Description
 --------- | ------- | -----------
 storeId | true | The ID of the store.
 merchantId | true | The merchant ID.
-deviceId | true | The device ID.
 storeAdminId   | true | The administrator ID of the store.
 token | true | The login token.
 accountNo | true | The account No.
@@ -138,7 +137,6 @@ Parameter | Necessary | Description
 --------- | ------- | -----------
 storeId | true | The ID of the store.
 merchantId | true | The merchant ID.
-deviceId | true | The device ID.
 storeAdminId   | true | The administrator ID of the store.
 token | true | The login token.
 accountNo | true | The account No.
@@ -157,7 +155,6 @@ Parameter | Necessary | Description
 --------- | ------- | -----------
 storeId | true | The ID of the store.
 merchantId | true | The merchant ID.
-deviceId | true | The device ID.
 storeAdminId   | true | The administrator ID of the store.
 token | true | The login token.
 amount | true | The amount of money(USD).
@@ -187,7 +184,6 @@ Parameter | Necessary | Description
 --------- | ------- | -----------
 storeId | true | The ID of the store.
 merchantId | true | The merchant ID.
-deviceId | true | The device ID.
 storeAdminId   | true | The administrator ID of the store.
 token | true | The login token.
 transactionNo | true | The transaction No.
@@ -218,9 +214,9 @@ Parameter | Necessary | Description
 --------- | ------- | -----------
 storeId | true | The ID of the store.
 merchantId | true | The merchant ID.
-deviceId | true | The device ID.
 storeAdminId   | true | The administrator ID of the store.
 token | true | The login token.
+transactionNo | true | The transaction No
 refundAmount | true | The refund amount(USD).
 refundAdmAccId | true |
 refundPassword | true | The refund password, you should MD5 the raw password before POST.
@@ -302,9 +298,12 @@ Parameter | Necessary | Description
 --------- | ------- | -----------
 storeId | true | The ID of the store.
 merchantId | true | The merchant ID.
-deviceId | true | The Device ID.
 storeAdminId   | true | The administrator ID.
 token | true | The login token.
+page   | true | The page number of the transaction list.
+size | true | The page size.
+transactionNo   | false | Search for this transaction No.
+refundStatus | false | Search the transaction of the refund status.
 
 ### Response
 
@@ -366,7 +365,6 @@ Parameter | Necessary | Description
 --------- | ------- | -----------
 storeId | true | The ID of the store.
 merchantId | true | The merchant ID.
-deviceId | true | The device ID.
 storeAdminId   | true | The administrator ID.
 token | true | The login token.
 transactionNo | true | The transaction No.
@@ -406,7 +404,6 @@ Parameter | Necessary | Description
 --------- | ------- | -----------
 storeId | true | The ID of the store.
 merchantId | true | The merchant ID.
-deviceId | true | The device ID.
 storeAdminId   | true | The administrator ID.
 token | true | The login token.
 startDate | true | Statistics start date in "yyyy-MM-dd" format.
@@ -423,6 +420,71 @@ refund  | Total refund amount.
 refundQty  | Total refund quantity.
 netSales  | Net sales amount.
 netSalesQty  | Net sales quantity.
+
+## Refund List
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "ret_code": "000100",
+    "ret_msg": "查询成功",
+    "list": [
+        {
+            "id": 817,
+            "transactionNo": "297245668050617422",
+            "amount": -0.01,
+            "refundAmount": null,
+            "netReceivable": null,
+            "exchangeRate": null,
+            "alipayUserLoginId": null,
+            "refundInfo": "SUCCESS",
+            "supplierPayTime": "20170524051958",
+            "hasRefund": 0,
+            "supplierTransactionNo": null,
+            "transactionReferNo": null,
+            "currency": null,
+            "originalTransactionNo": null,
+            "refundTime": "2017-05-24 05:19:58",
+            "refundTimeV2": "20170524051958"
+        }
+    ]
+}
+```
+
+Get the refund list
+
+### HTTP Request
+
+`POST http://mapi.yuansfer.com/appTransaction/refundList`
+
+### POST Parameters
+
+Parameter | Necessary | Description
+--------- | ------- | -----------
+storeId | true | The ID of the store.
+merchantId | true | The merchant ID.
+storeAdminId   | true | The administrator ID of the store.
+token | true | The login token.
+originalTransactionNo | true | .
+
+### Response
+
+Parameter | Description
+--------- | -----------
+transactionNo  | Transaction No.
+amount  | The transaction amount.
+refundAmount  | The refund amount.
+netReceivable  | The token to modify the password, need in Step 2.
+exchangeRate  | Exchange Rate.
+alipayUserLoginId  | The token to modify the password, need in Step 2.
+refundInfo  | The refund status in text.
+supplierPayTime  | The token to modify the password, need in Step 2.
+hasRefund  | The token to modify the password, need in Step 2.
+supplierTransactionNo  | The token to modify the password, need in Step 2.
+currency  | Currency.
+originalTransactionNo  | Original Transaction No.
+refundTimeV2  | The refund time in "YYMMDDhhmmss"(20170524051958) format.
 
 
 ## Refund List
@@ -443,7 +505,7 @@ netSalesQty  | Net sales quantity.
             "exchangeRate": null,
             "alipayUserLoginId": null,
             "refundInfo": "SUCCESS",
-            "supplierPayTime": "2017-05-24 05:19:58",
+            "supplierPayTime": "20170524051958",
             "hasRefund": 0,
             "supplierTransactionNo": null,
             "transactionReferNo": null,
@@ -460,7 +522,7 @@ Get the refund list
 
 ### HTTP Request
 
-`POST http://mapi.yuansfer.com/appTransaction/refund`
+`POST http://mapi.yuansfer.com/appTransaction/refundList`
 
 ### POST Parameters
 
