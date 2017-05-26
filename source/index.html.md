@@ -188,7 +188,7 @@ merchantId | true | The merchant ID.
 storeAdminId   | true | The administrator ID of the store.
 token | true | The login token.
 transactionNo | true | The transaction No.
-paymentBarcode | true |
+paymentBarcode | true | Alipay payment QR-Code.
 
 ### Response
 
@@ -219,7 +219,7 @@ storeAdminId   | true | The administrator ID of the store.
 token | true | The login token.
 transactionNo | true | The transaction No
 refundAmount | true | The refund amount(USD).
-refundAdmAccId | true |
+refundAdmAccId | true | Refund administrator account ID
 refundPassword | true | The refund password, you should MD5 the raw password before POST.
 
 ### Response
@@ -313,7 +313,7 @@ Parameter | Description
 transactionNo  | The transaction No.
 amount  | Transaction amount(USD).
 refundAmount  | Refund amount(USD).
-netReceivable  | The token to modify the password, need in Step 2.
+netReceivable  | The difference of amount and refund amount (amount - refund amount).
 exchangeRate  | The exchange rate.
 alipayUserLoginId  | The supplier's Alipay login ID.
 refundInfo  | The refund status in text.
@@ -476,7 +476,7 @@ Parameter | Description
 transactionNo  | Transaction No.
 amount  | The transaction amount.
 refundAmount  | The refund amount.
-netReceivable  | 
+netReceivable  | The difference of amount and refund amount (amount - refund amount).
 exchangeRate  | Exchange Rate.
 alipayUserLoginId  | The supplier's Alipay login ID.
 refundInfo  | The refund status in text.
