@@ -11,6 +11,7 @@ toc_footers:
 includes:
   - errors
   - basicparameter
+  - sandbox
 
 search: true
 ---
@@ -21,12 +22,15 @@ Welcome to the Yuansfer POS API! You can use our API to access Yuansfer API endp
 
 # Notice
 
+<aside class="notice">
+Our sandbox environment coming soon. Please test our API in the sandbox environment.
+</aside>
 
 # API List
 
 ## Check a store whether exists
 
-> The above command returns JSON structured like this:
+> The API return JSON structured like this:
 
 ```json
 {
@@ -50,7 +54,7 @@ storeNo | true | The No of the store.
 
 ## Login
 
-> The above command returns JSON structured like this:
+> The API return JSON structured like this:
 
 ```json
 {
@@ -97,52 +101,6 @@ merchantId  | The merchant ID.
 storeUserName  | The user name of the store.
 storeId  | The ID of the store.
 
-## Change Password Step 1
-
-When you need to change password, you should call two API, this is the first API that you should call and get the password token(different from the login token).
-
-### HTTP Request
-
-`POST https://mapi.yuansfer.com/appStoreAdmin/changePwd_step1`
-
-### POST Parameters
-
-Parameter | Necessary | Description
---------- | ------- | -----------
-storeId | true | The ID of the store.
-merchantId | true | The merchant ID.
-storeAdminId   | true | The administrator ID of the store.
-token | true | The login token.
-accountNo | true | The account No.
-password | true | The old password of the store, you should MD5 the "@yuanex + raw_password" before POST.
-
-### Response
-
-Parameter | Description
---------- | -----------
-pwdToken  | The token to modify the password, need in Step 2.
-
-
-## Change Password Step 2
-
-When you need to change password, you should call two API, this is the second API that you should call.
-
-### HTTP Request
-
-`POST https://mapi.yuansfer.com/appStoreAdmin/changePwd_step2`
-
-### POST Parameters
-
-Parameter | Necessary | Description
---------- | ------- | -----------
-storeId | true | The ID of the store.
-merchantId | true | The merchant ID.
-storeAdminId   | true | The administrator ID of the store.
-token | true | The login token.
-accountNo | true | The account No.
-password | true | The new password of the store, you should MD5 the "@yuanex + raw_password" before POST.
-pwdToken | true | Get it in Step 1.
-
 ## Create New Order
 
 ### HTTP Request
@@ -172,6 +130,49 @@ storeAdminId  | The administrator ID of the store.
 
 ## Pay
 
+> The API return JSON structured like this:
+
+```json
+{
+    "id": 445, 
+    "transactionNo": "297245668156277152", 
+    "merchantId": 42, 
+    "storeId": 13, 
+    "storeAdminId": 13, 
+    "partnerReferId": 22, 
+    "partnerId": 20, 
+    "amount": 0.01, 
+    "createTime": 1495680058000, 
+    "updateTime": 1495680058000, 
+    "delFlag": 0, 
+    "refundAmount": 0, 
+    "refundAdmAccId": null, 
+    "tip": 0, 
+    "transactionType": 1, 
+    "transactionCurrency": 1, 
+    "transactionStatus": 0, 
+    "paymentTime": 1495680058000, 
+    "paymentChannel": 1, 
+    "originalTransactionNo": null, 
+    "supplierPartnerType": 1, 
+    "supplierPartnerId": "2088021966388155", 
+    "supplierDiscount": 0, 
+    "merchantDiscount": 0, 
+    "responseCode": "100", 
+    "supplierTransId": "2017052521001004120253462951", 
+    "supplierUserLoginId": "138****5302", 
+    "exchangeRate": "6.91030000", 
+    "supplierPayTime": "20170525104140", 
+    "searchStartDate": null, 
+    "searchEndDate": null, 
+    "refundStatus": null, 
+    "merchantName": null, 
+    "storeName": null, 
+    "merchantNo": null, 
+    "storeNo": null
+}
+```
+
 After scan QR-Code of the customer's Phone, call this API to get the pay(money).
 
 ### HTTP Request
@@ -193,11 +194,11 @@ paymentBarcode | true |
 
 Parameter | Description
 --------- | -----------
-supplierPartnerId  |
-supplierTransId  |
-supplierUserLoginId  |
-exchangeRate  |
-supplierPayTime  |
+supplierPartnerId  | The supplier Partner ID
+supplierTransId  | The supplier transaction ID
+supplierUserLoginId  | The supplier's Alipay login ID
+exchangeRate  | The exchange rate
+supplierPayTime  | The supplier pay time in "YYMMDDhhmmss"(20170524051958) format.
 
 
 ## Refund a transaction
@@ -225,16 +226,16 @@ refundPassword | true | The refund password, you should MD5 the raw password bef
 
 Parameter | Description
 --------- | -----------
-originalTransactionNo  |
-supplierPartnerId  |
-supplierTransId  |
-supplierUserLoginId  |
-exchangeRate  |
-supplierPayTime  |
+originalTransactionNo  | Original transaction No
+supplierPartnerId  | The supplier partner ID
+supplierTransId  | The supplier transaction ID
+supplierUserLoginId  | The supplier's Alipay login ID
+exchangeRate  | The exchange rate
+supplierPayTime  | The supplier pay time in "YYMMDDhhmmss"(20170524051958) format.
 
 ## Transaction History
 
-> The above command returns JSON structured like this:
+> The API return JSON structured like this:
 
 ```json
 {
@@ -309,24 +310,24 @@ refundStatus | false | Search the transaction of the refund status.
 
 Parameter | Description
 --------- | -----------
-transactionNo  | The token to modify the password, need in Step 2.
-amount  | The token to modify the password, need in Step 2.
-refundAmount  | The token to modify the password, need in Step 2.
+transactionNo  | The transaction No.
+amount  | Transaction amount(USD).
+refundAmount  | Refund amount(USD).
 netReceivable  | The token to modify the password, need in Step 2.
-exchangeRate  | The token to modify the password, need in Step 2.
-alipayUserLoginId  | The token to modify the password, need in Step 2.
-refundInfo  | The token to modify the password, need in Step 2.
-hasRefund  | The token to modify the password, need in Step 2.
-supplierTransactionNo  | The token to modify the password, need in Step 2.
-transactionReferNo  | The token to modify the password, need in Step 2.
-currency  | The token to modify the password, need in Step 2.
-originalTransactionNo  | The token to modify the password, need in Step 2.
-refundTimeV2  | The token to modify the password, need in Step 2.
+exchangeRate  | The exchange rate.
+alipayUserLoginId  | The supplier's Alipay login ID.
+refundInfo  | The refund status in text.
+hasRefund  | Refund or not.
+supplierTransactionNo  | Supplier Transaction No.
+transactionReferNo  | Transaction refer No.
+currency  | Currency.
+originalTransactionNo  | Original transaction No.
+refundTimeV2  | Refund time in "YYMMDDhhmmss"(20170524051958) format.
 
 
 ## Transaction Detail
 
-> The above command returns JSON structured like this:
+> The API return JSON structured like this:
 
 ```json
 {
@@ -371,7 +372,7 @@ transactionNo | true | The transaction No.
 
 ## Transaction Statistics
 
-> The above command returns JSON structured like this:
+> The API return JSON structured like this:
 
 ```json
 {
@@ -423,7 +424,7 @@ netSalesQty  | Net sales quantity.
 
 ## Refund List
 
-> The above command returns JSON structured like this:
+> The API return JSON structured like this:
 
 ```json
 {
@@ -466,7 +467,7 @@ storeId | true | The ID of the store.
 merchantId | true | The merchant ID.
 storeAdminId   | true | The administrator ID of the store.
 token | true | The login token.
-originalTransactionNo | true | .
+originalTransactionNo | true | Original transaction No.
 
 ### Response
 
@@ -475,13 +476,59 @@ Parameter | Description
 transactionNo  | Transaction No.
 amount  | The transaction amount.
 refundAmount  | The refund amount.
-netReceivable  | The token to modify the password, need in Step 2.
+netReceivable  | 
 exchangeRate  | Exchange Rate.
-alipayUserLoginId  | The token to modify the password, need in Step 2.
+alipayUserLoginId  | The supplier's Alipay login ID.
 refundInfo  | The refund status in text.
-supplierPayTime  | The token to modify the password, need in Step 2.
-hasRefund  | The token to modify the password, need in Step 2.
-supplierTransactionNo  | The token to modify the password, need in Step 2.
+supplierPayTime  | Supplier time in "YYMMDDhhmmss"(20170524051958) format.
+hasRefund  | Refund or not.
+supplierTransactionNo  | Supplier transaction No.
 currency  | Currency.
 originalTransactionNo  | Original Transaction No.
 refundTimeV2  | The refund time in "YYMMDDhhmmss"(20170524051958) format.
+
+## Change Password Step 1
+
+When you need to change password, you should call two API, this is the first API that you should call and get the password token(different from the login token).
+
+### HTTP Request
+
+`POST https://mapi.yuansfer.com/appStoreAdmin/changePwd_step1`
+
+### POST Parameters
+
+Parameter | Necessary | Description
+--------- | ------- | -----------
+storeId | true | The ID of the store.
+merchantId | true | The merchant ID.
+storeAdminId   | true | The administrator ID of the store.
+token | true | The login token.
+accountNo | true | The account No.
+password | true | The old password of the store, you should MD5 the "@yuanex + raw_password" before POST.
+
+### Response
+
+Parameter | Description
+--------- | -----------
+pwdToken  | The token to modify the password, need in Step 2.
+
+
+## Change Password Step 2
+
+When you need to change password, you should call two API, this is the second API that you should call.
+
+### HTTP Request
+
+`POST https://mapi.yuansfer.com/appStoreAdmin/changePwd_step2`
+
+### POST Parameters
+
+Parameter | Necessary | Description
+--------- | ------- | -----------
+storeId | true | The ID of the store.
+merchantId | true | The merchant ID.
+storeAdminId   | true | The administrator ID of the store.
+token | true | The login token.
+accountNo | true | The account No.
+password | true | The new password of the store, you should MD5 the "@yuanex + raw_password" before POST.
+pwdToken | true | Get it in Step 1.
